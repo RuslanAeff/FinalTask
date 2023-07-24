@@ -24,7 +24,12 @@ namespace MarketDemo
 
 
 
-                while (!int.TryParse(Console.ReadLine(), out option));
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid option!");
+                    Console.WriteLine("Enter an option please:");
+                    Console.WriteLine("----------------");
+                }
             
             
             
