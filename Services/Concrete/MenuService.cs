@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleTables;
@@ -38,10 +39,13 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
            
-
+            
         }    
         
-        
+        public static void MenuEditProduct() 
+        {
+
+        }
        
     }
 }
