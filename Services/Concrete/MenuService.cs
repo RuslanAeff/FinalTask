@@ -4,33 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleTables;
+using MarektDemo.DATA.Enum;
 
 namespace MarektDemo.Services.Concrete
 {
-    internal class MenuService
+    public class MenuService
     {
-        public static void MenuAddNewProduct ()
-        {
-            try 
-            {
-                var products = MarketService.GetProducts();
+        private static MarketService marketservice = new MarketService();
 
-                if (products.count==0 )
-                {
-                    Console.WriteLine("There is no products!");
-                    return;
-                }
-                var table = new ConsoleTable("Id", "Name", "Price", "catagory", "Number");
-                foreach ( var product in products ) 
-                {
-                    table.AddRow(product.Id, product.name, product.price, product.catagory, product.number);
-                }
-                table.Write();
-            } 
+
+        public static void MenuAddNewProduct() 
+        {
+            try
+            {
+                Console.WriteLine("Enter name:");
+                string name = Console.ReadLine();
+
+                Console.WriteLine("Enter price");
+                int price = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter catagory:");
+                Category catagory = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
+
+                Console.WriteLine("Enter number:");
+                int number = int.Parse(Console.ReadLine());
+
+                int newId = marketservice.AddProduct(name, price, catagory, number);
+                Console.WriteLine($"Product with ID {newId} was created!");
+            }
             catch (Exception ex)
             {
+
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
-        }
+           
+
+        }    
+        
+        
+       
     }
 }

@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 namespace MarektDemo.Models
 {
     
-    internal class Product : BaseEntity
+    public class Product : BaseEntity
     {
         private static int count =0;
 
         public string Name { get; set; }
         public int Price { get; set; }
-        public Catagory Catagory { get; set; }
+        public Category Catagory { get; set; }
         public int Number { get; set; }
 
-        public Product(string name, int price, Catagory catagory, int number)
+        public Product(string name, int price, Category catagory, int number)
         {
+           
             Name = name;
             Price = price;
             Catagory = catagory;

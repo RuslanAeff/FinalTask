@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarektDemo.Models
 {
-    internal class Sell: BaseEntity
+    public class Sell: BaseEntity
     {
         public int Amount { get; set; }
         public string Sellitem { get; set; }
