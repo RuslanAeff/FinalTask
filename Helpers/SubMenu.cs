@@ -44,27 +44,32 @@ namespace MarektDemo.Helpers
                 switch (option)
                 {
                     case 1:
-                     MenuService.MenuAddNewProduct();
-                        break;
+                       MenuService.MenuAddNewProduct();
+                       break;
                     case 2:
-                    // MenuService.MenuEditProduct();
+                       MenuService.MenuEditProduct();
+                       break;
                     case 3:
-                    // MenuService.MenuDeleteProduct();
+                       MenuService.MenuDeleteProduct();
+                       break;
                     case 4:
-                    // MenuService.MenuShowAllProducts():
+                       MenuService.MenuShowAllProducts();
+                       break;
                     case 5:
-                    // MenuService.MenuShowProductsForCategory();
+                       MenuService.MenuShowProductsForCategory();
+                        break;
                     case 6:
                     // MenuService.MenuShowProductsForPriceRange();
                     case 7:
                     // MenuService.MenuSearchProductbyName();
                     default:
+                        Console.WriteLine("There is no such option!");
                         break;
                 }
 
 
 
-            } while (option == 0);
+            } while (option != 0);
 
         }
     }

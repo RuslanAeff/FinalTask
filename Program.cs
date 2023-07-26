@@ -42,6 +42,7 @@ namespace MarketDemo
                     case 2:
 
                     default:
+                        Console.WriteLine("There is no such option");
                         break;
                 }
 
@@ -50,7 +51,7 @@ namespace MarketDemo
 
 
 
-            } while (option==0);
+            } while (option!=0);
 
         }
     }

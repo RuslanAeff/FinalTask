@@ -10,7 +10,9 @@ namespace MarektDemo.Services.Abstract
 {
     public interface IMarketable
     {
-        //List<Product> GetProducts();
+        List<Product> GetProducts();
         int AddProduct(string name, int  price, Category catagory, int number);
+
+        
     }
 }
