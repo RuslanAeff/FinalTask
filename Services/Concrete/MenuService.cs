@@ -14,11 +14,11 @@ namespace MarektDemo.Services.Concrete
     {
         private static MarketService marketservice = new MarketService();
 
-
         public static void MenuAddNewProduct() 
         {
             try
             {
+                
                 Console.WriteLine("Enter name:");
                 string name = Console.ReadLine();
 
@@ -27,6 +27,7 @@ namespace MarektDemo.Services.Concrete
 
                 Console.WriteLine("Enter catagory:");
                 Category catagory = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
+                
 
                 Console.WriteLine("Enter number:");
                 int number = int.Parse(Console.ReadLine());
@@ -115,17 +116,26 @@ namespace MarektDemo.Services.Concrete
 
         public static void MenuShowProductsForCategory() 
         {
+            Console.Clear();
+            var array = Enum.GetValues(typeof(Category)).Cast<Category>().ToArray();
             try
-            {    var products = marketservice.GetProducts();
+            {
+                var products = marketservice.GetProducts();
+                Console.WriteLine($"1.Food 2.Electronics 3.Drinks");
+                Console.WriteLine("                         ");
                 Console.WriteLine("Enter product's category:");
                 Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
 
-                if (category != category) throw new Exception("There is no product!");
-
-                var table = new ConsoleTable("Category");
-                foreach ( var product in products )
+                bool isEqual =  array.Any(c=> c.Equals(category));
+                if (isEqual == false)
                 {
-                    table.AddRow(product.Catagory);
+                    throw new Exception("SomeThings Went Wrong!!!");
+                }
+                var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
+                var getcategory = products.FindAll(x => x.Catagory == category);
+                foreach (var product in getcategory)
+                {
+                    table.AddRow(product.Id, product.Name, product.Price, product.Catagory, product.Number);
                 }
                 table.Write();
             }
@@ -137,5 +147,41 @@ namespace MarektDemo.Services.Concrete
             
 
         }
+        public static void MenuShowProductsForPriceRange()
+        {
+            try
+            {
+                Console.WriteLine("Enter minamount:");
+                int minamount = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter maxamount:");
+                int maxamount = int.Parse(Console.ReadLine());
+                var existproduct = marketservice.ShowProductsForPriceRange(minamount, maxamount);
+                if (existproduct.Count == 0)
+                {
+                    Console.WriteLine("Not Found!");
+                }
+                
+                    var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
+                foreach (var product in existproduct)
+                {
+                    table.AddRow(product.Id, product.Name, product.Price,product.Catagory, product.Number);
+                }
+                table.Write();
+                
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }    
+
+           
+
+            
+
+
+        }
+
+
     }
 }

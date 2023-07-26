@@ -14,20 +14,24 @@ namespace MarektDemo.Services.Concrete
         private List<Product> products;
         private List<Sell> sells;
         private List<Sell_item> sell_İtems;
+        private List<Category> categories;
 
         public MarketService()
         {
             products = new List<Product>();
             sells = new List<Sell>();
             sell_İtems = new List<Sell_item>();
+            categories = new List<Category>();
         }
 
         public int AddProduct(string name, int price, Category catagory, int number) 
         {
+            
             if (string.IsNullOrEmpty(name))   throw new ArgumentNullException("Name is null!"); 
             if (price < 0)  throw new Exception("Price is negative"); 
             if (number < 0) { throw new Exception("Number is negative"); }
-            if (catagory != catagory)  throw new Exception("There is no Category!"); 
+            if (catagory != catagory)  throw new Exception("There is no Category!");
+            if (catagory ==null) throw new Exception("There is no Category!");
             var product = new Product (name, price, catagory, number);
                 products.Add(product);
                 return product.Id;
@@ -54,9 +58,23 @@ namespace MarektDemo.Services.Concrete
             if (getproduct == -1) throw new Exception("Products not found!");
             products.RemoveAt(getproduct);
         }
+        public List<Product> ShowProductsForPriceRange(int minamount, int maxamount) 
+        {
+            if (minamount <= 0) throw new Exception("minamount cannot be less than 0 or equals 0");
+            if (maxamount <= 0) throw new Exception("minamount cannot be less than 0 or equals 0");
+            if (minamount > maxamount) throw new Exception("minamount cannot be greater than maxamount!");
+            return products.Where(x => x.Price >=minamount && x.Price <=maxamount).ToList();
+
+        }
+
+
         public List<Product> GetProducts()
         {
+            
             return products; 
         }
+        
+    
+    
     }
 }

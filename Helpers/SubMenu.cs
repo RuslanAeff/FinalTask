@@ -27,6 +27,7 @@ namespace MarektDemo.Helpers
                 Console.WriteLine("5. Show products for category");
                 Console.WriteLine("6. Show product for pricerange");
                 Console.WriteLine("7. Search product by name");
+                Console.WriteLine("0. Go back");
                 Console.WriteLine("------------------------");
                 Console.WriteLine("Please enter option:");
                 Console.WriteLine("------------------------");
@@ -59,9 +60,14 @@ namespace MarektDemo.Helpers
                        MenuService.MenuShowProductsForCategory();
                         break;
                     case 6:
-                    // MenuService.MenuShowProductsForPriceRange();
+                       MenuService.MenuShowProductsForPriceRange();
+                        break;
                     case 7:
                     // MenuService.MenuSearchProductbyName();
+                      //break;
+                      case 0:
+                        Console.Clear();
+                        break;
                     default:
                         Console.WriteLine("There is no such option!");
                         break;
