@@ -66,7 +66,7 @@ namespace MarektDemo.Services.Concrete
             return products.Where(x => x.Price >=minamount && x.Price <=maxamount).ToList();
 
         }
-
+       
 
         public List<Product> GetProducts()
         {

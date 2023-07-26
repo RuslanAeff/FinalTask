@@ -18,7 +18,6 @@ namespace MarektDemo.Services.Concrete
         {
             try
             {
-                
                 Console.WriteLine("Enter name:");
                 string name = Console.ReadLine();
 
@@ -39,9 +38,7 @@ namespace MarektDemo.Services.Concrete
             {
 
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }
-           
-            
+            }            
         }    
         
         public static void MenuEditProduct() 
@@ -59,17 +56,13 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine("Enter number:");
                 int number = int.Parse(Console.ReadLine());
                 marketservice.EditProduct(id, name, price, category, number);
-
-
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
          
         }
-
         public static void MenuDeleteProduct()
         {
             try
@@ -85,11 +78,7 @@ namespace MarektDemo.Services.Concrete
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
-
         }
-
-
-
         public static void MenuShowAllProducts() 
         {
             try
@@ -110,8 +99,7 @@ namespace MarektDemo.Services.Concrete
             catch(Exception ex) 
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }
-            
+            }           
         }
 
         public static void MenuShowProductsForCategory() 
@@ -144,8 +132,6 @@ namespace MarektDemo.Services.Concrete
 
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
-            
-
         }
         public static void MenuShowProductsForPriceRange()
         {
@@ -171,17 +157,35 @@ namespace MarektDemo.Services.Concrete
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }    
-
-           
-
-            
-
-
         }
+        public static void MenuSearchProductbyName()
+        {
+            try
+            {
+                var products = marketservice.GetProducts();
+                Console.WriteLine("Enter name:");
+                string name = Console.ReadLine();
+                if (products.Count == 0) throw new Exception("Not Found!");
+                if (string.IsNullOrEmpty(name)) throw new Exception("Name cannot be null!");
 
+                var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
+                
+                var productna = products.Where(x => x.Name == name).ToArray();
+
+                foreach (var productn in productna)
+                {
+                    table.AddRow(productn.Id, productn.Name, productn.Price, productn.Catagory, productn.Number);
+                }
+                table.Write();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }                         
+        }
 
     }
 }

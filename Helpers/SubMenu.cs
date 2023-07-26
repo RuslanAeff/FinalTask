@@ -63,10 +63,10 @@ namespace MarektDemo.Helpers
                        MenuService.MenuShowProductsForPriceRange();
                         break;
                     case 7:
-                    // MenuService.MenuSearchProductbyName();
-                      //break;
-                      case 0:
-                        Console.Clear();
+                       MenuService.MenuSearchProductbyName();
+                        break;
+                    case 0:
+                       Console.Clear();
                         break;
                     default:
                         Console.WriteLine("There is no such option!");
