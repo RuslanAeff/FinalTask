@@ -9,8 +9,6 @@ namespace MarketDemo
     {
         public static void Main(string[] args)
         {
-
-
             Console.Clear();
 
             int option;
@@ -25,8 +23,6 @@ namespace MarketDemo
                 Console.WriteLine("------------------------");
 
 
-
-
                while(!int.TryParse(Console.ReadLine(), out option))
                 {
                     Console.WriteLine("Invalid option!");
@@ -37,18 +33,15 @@ namespace MarketDemo
                 switch (option)
                 {
                     case 1:
-                        SubMenu.SubMenuHelp();
+                        SubMenu.SubMenuHelpProduct();
                         break;
                     case 2:
-
+                        SubMenu.SubMenuHelpSell();
+                        break;                         
                     default:
                         Console.WriteLine("There is no such option");
                         break;
                 }
-
-
-
-
 
 
             } while (option!=0);

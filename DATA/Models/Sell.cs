@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MarektDemo.Models
 {
-    public class Sell: BaseEntity
+    public class Sale: BaseEntity
     {
-        public int Amount { get; set; }
+        public double Amount { get; set; }
         public string Sellitem { get; set; }
         public DateTime Time { get; set; }
 

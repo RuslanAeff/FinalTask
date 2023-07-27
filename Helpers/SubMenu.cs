@@ -10,10 +10,8 @@ namespace MarektDemo.Helpers
 {
     public class SubMenu 
     {
-        public static void SubMenuHelp()
+        public static void SubMenuHelpProduct()
         {
-
-
             Console.Clear();
 
             int option;
@@ -31,8 +29,6 @@ namespace MarektDemo.Helpers
                 Console.WriteLine("------------------------");
                 Console.WriteLine("Please enter option:");
                 Console.WriteLine("------------------------");
-
-
 
 
                 while (!int.TryParse(Console.ReadLine(), out option))
@@ -58,25 +54,72 @@ namespace MarektDemo.Helpers
                        break;
                     case 5:
                        MenuService.MenuShowProductsForCategory();
-                        break;
+                       break;
                     case 6:
                        MenuService.MenuShowProductsForPriceRange();
-                        break;
+                       break;
                     case 7:
                        MenuService.MenuSearchProductbyName();
-                        break;
+                       break;
                     case 0:
                        Console.Clear();
-                        break;
+                       break;
                     default:
-                        Console.WriteLine("There is no such option!");
-                        break;
+                       Console.WriteLine("There is no such option!");
+                       break;
                 }
-
-
 
             } while (option != 0);
 
         }
+        public static void SubMenuHelpSell()
+        {
+            Console.Clear ();
+
+            int option;
+
+            do
+            {
+                Console.WriteLine("1. Add new sale");
+                Console.WriteLine("2. Product return (withdrawal from sale)");
+                Console.WriteLine("3. Delete sale");
+                Console.WriteLine("4. Show all sales");
+                Console.WriteLine("5. Showing sales by date range");
+                Console.WriteLine("6. Showing sales by price range");
+                Console.WriteLine("7. Showing sales on a given date");
+                Console.WriteLine("8. Showing information of the sale with the given ID");
+                Console.WriteLine("0. Go back");
+                Console.WriteLine("------------------------");
+                Console.WriteLine("Please enter option:");
+                Console.WriteLine("------------------------");
+
+
+
+
+                while (!int.TryParse(Console.ReadLine(), out option))
+                {
+                    Console.WriteLine("Invalid option!");
+                    Console.WriteLine("Enter an option please:");
+                    Console.WriteLine("----------------");
+                }
+                switch (option)
+                {
+                    case 1:
+
+                        break;
+                    case 0:
+                        Console.Clear();
+                        break;
+                    default:
+                       Console.WriteLine("There is no such option!");
+                        break;
+                }
+
+
+            } while (option != 0);
+        }
+    
+    
+    
     }
 }

@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MarektDemo.Models
-{
-    
+{   
     public class Product : BaseEntity
     {
         private static int count =0;
@@ -18,8 +17,7 @@ namespace MarektDemo.Models
         public int Number { get; set; }
 
         public Product(string name, int price, Category catagory, int number)
-        {
-           
+        {   
             Name = name;
             Price = price;
             Catagory = catagory;
@@ -27,7 +25,6 @@ namespace MarektDemo.Models
 
             Id = count;
             count++;
-
         }
 
     }

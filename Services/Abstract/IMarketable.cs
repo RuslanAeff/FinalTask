@@ -11,7 +11,9 @@ namespace MarektDemo.Services.Abstract
     public interface IMarketable
     {
         List<Product> GetProducts();
-        int AddProduct(string name, int  price, Category catagory, int number);
+        List<Sale> GetSale();
+        List<Sale_item> GetSaleItems();
+        int AddProduct(string name, int price, Category catagory, int number);
 
         
     }

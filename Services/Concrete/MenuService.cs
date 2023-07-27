@@ -26,8 +26,7 @@ namespace MarektDemo.Services.Concrete
 
                 Console.WriteLine("Enter catagory:");
                 Category catagory = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
-                
-
+               
                 Console.WriteLine("Enter number:");
                 int number = int.Parse(Console.ReadLine());
 
@@ -40,7 +39,7 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }            
         }    
-        
+       
         public static void MenuEditProduct() 
         {
             try
