@@ -6,10 +6,22 @@ using System.Threading.Tasks;
 
 namespace MarektDemo.Models
 {
-    public class Sale_item : BaseEntity
+    public class SaleItem 
     {
-        public string Product { get; set; }
+        private static int counter = 0;
+        public int Id { get; set; }
+        public Product Product { get; set; }
         public int Number { get; set; }
+
+        public SaleItem (Product product, int number)
+        {
+            if (product.Number < number || number < 0) 
+                throw new ArgumentException($"Cannot make a sale item of {number} {product.Name} which " +
+                    $"{product.Number} of it exist in the storage!");
+            Product = product;
+            Number = number;
+            counter++;
+        }
 
     }
 }

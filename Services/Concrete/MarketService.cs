@@ -13,14 +13,14 @@ namespace MarektDemo.Services.Concrete
     {
         private List<Product> products;
         private List<Sale> sales;
-        private List<Sale_item> sale_İtems;
+        private List<SaleItem> sale_İtems;
         private List<Category> categories;
 
         public MarketService()
         {
             products = new List<Product>();
             sales = new List<Sale>();
-            sale_İtems = new List<Sale_item>();
+            sale_İtems = new List<SaleItem>();
             categories = new List<Category>();
         }
 
@@ -64,6 +64,35 @@ namespace MarektDemo.Services.Concrete
             return products.Where(x => x.Price >=minamount && x.Price <=maxamount).ToList();
 
         }
+
+
+
+
+        public int AddSale(int id ,int quantity,DateTime time)
+        {
+            List<SaleItem> tempSale = new List<SaleItem>();
+
+            var product = products.FirstOrDefault(x => x.Id == id); 
+            if (product == null) throw new Exception("Product is not found");
+            var sum = product.Price * quantity;
+            var saleItem = new SaleItem(product,quantity);
+            tempSale.Add(saleItem);
+            var sale = new Sale(sum,time);
+
+            foreach (var item in tempSale)
+            {
+                sale.AddSaleItem(item);
+            }
+            sales.Add(sale);
+
+            return id;
+        }
+
+
+
+
+
+
         public List<Product> GetProducts()
         {
             return products; 
@@ -72,7 +101,7 @@ namespace MarektDemo.Services.Concrete
         {
             return sales;
         }
-        public List<Sale_item> GetSaleItems()
+        public List<SaleItem> GetSaleItems()
         {
             return sale_İtems;
         }

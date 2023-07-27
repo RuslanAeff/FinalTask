@@ -12,7 +12,7 @@ namespace MarektDemo.Services.Abstract
     {
         List<Product> GetProducts();
         List<Sale> GetSale();
-        List<Sale_item> GetSaleItems();
+        List<SaleItem> GetSaleItems();
         int AddProduct(string name, int price, Category catagory, int number);
 
         

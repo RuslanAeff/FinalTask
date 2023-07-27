@@ -25,6 +25,8 @@ namespace MarektDemo.Services.Concrete
                 int price = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("Enter catagory:");
+                Console.WriteLine("               ");
+                Console.WriteLine("1. Food  2. Electronics  3.Drinks");
                 Category catagory = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
                
                 Console.WriteLine("Enter number:");
@@ -112,7 +114,6 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine("                         ");
                 Console.WriteLine("Enter product's category:");
                 Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
-
                 bool isEqual =  array.Any(c=> c.Equals(category));
                 if (isEqual == false)
                 {
@@ -186,5 +187,25 @@ namespace MarektDemo.Services.Concrete
             }                         
         }
 
+        public static void MenuAddNewSale()
+        {
+            try
+            {
+                Console.WriteLine("Enter product ID:");
+                int id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter sale's quantity");
+                int quantity = int.Parse(Console.ReadLine());
+                
+                marketservice.AddSale(id, quantity, DateTime.Now);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }
+    
+    
     }
 }

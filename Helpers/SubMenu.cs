@@ -105,7 +105,7 @@ namespace MarektDemo.Helpers
                 switch (option)
                 {
                     case 1:
-
+                        MenuService.MenuAddNewSale();
                         break;
                     case 0:
                         Console.Clear();
