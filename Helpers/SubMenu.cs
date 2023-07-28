@@ -93,9 +93,6 @@ namespace MarektDemo.Helpers
                 Console.WriteLine("Please enter option:");
                 Console.WriteLine("------------------------");
 
-
-
-
                 while (!int.TryParse(Console.ReadLine(), out option))
                 {
                     Console.WriteLine("Invalid option!");
@@ -105,7 +102,13 @@ namespace MarektDemo.Helpers
                 switch (option)
                 {
                     case 1:
-                        MenuService.MenuAddNewSale();
+                       MenuService.MenuAddNewSale();
+                        break;
+                    case 3:
+                       MenuService.MenuDeleteSale();
+                        break;
+                    case 4:
+                       MenuService.MenuShowAllSales();
                         break;
                     case 0:
                         Console.Clear();
@@ -114,12 +117,7 @@ namespace MarektDemo.Helpers
                        Console.WriteLine("There is no such option!");
                         break;
                 }
-
-
             } while (option != 0);
         }
-    
-    
-    
     }
 }

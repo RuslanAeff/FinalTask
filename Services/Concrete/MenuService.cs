@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleTables;
 using MarektDemo.DATA.Enum;
+using MarektDemo.Models;
 
 namespace MarektDemo.Services.Concrete
 {
@@ -14,7 +15,7 @@ namespace MarektDemo.Services.Concrete
     {
         private static MarketService marketservice = new MarketService();
 
-        public static void MenuAddNewProduct() 
+        public static void MenuAddNewProduct()
         {
             try
             {
@@ -26,9 +27,9 @@ namespace MarektDemo.Services.Concrete
 
                 Console.WriteLine("Enter catagory:");
                 Console.WriteLine("               ");
-                Console.WriteLine("1. Food  2. Electronics  3.Drinks");
+                Console.WriteLine("0. Food  1. Electronics  2.Drinks");
                 Category catagory = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
-               
+
                 Console.WriteLine("Enter number:");
                 int number = int.Parse(Console.ReadLine());
 
@@ -39,10 +40,9 @@ namespace MarektDemo.Services.Concrete
             {
 
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }            
-        }    
-       
-        public static void MenuEditProduct() 
+            }
+        }
+        public static void MenuEditProduct()
         {
             try
             {
@@ -62,7 +62,6 @@ namespace MarektDemo.Services.Concrete
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
-         
         }
         public static void MenuDeleteProduct()
         {
@@ -80,13 +79,13 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
         }
-        public static void MenuShowAllProducts() 
+        public static void MenuShowAllProducts()
         {
             try
             {
                 var products = marketservice.GetProducts();
 
-                if (products.Count ==0) 
+                if (products.Count == 0)
                 {
                     Console.WriteLine("There are no products!");
                 }
@@ -97,13 +96,12 @@ namespace MarektDemo.Services.Concrete
                 }
                 table.Write();
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }           
+            }
         }
-
-        public static void MenuShowProductsForCategory() 
+        public static void MenuShowProductsForCategory()
         {
             Console.Clear();
             var array = Enum.GetValues(typeof(Category)).Cast<Category>().ToArray();
@@ -114,7 +112,7 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine("                         ");
                 Console.WriteLine("Enter product's category:");
                 Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
-                bool isEqual =  array.Any(c=> c.Equals(category));
+                bool isEqual = array.Any(c => c.Equals(category));
                 if (isEqual == false)
                 {
                     throw new Exception("SomeThings Went Wrong!!!");
@@ -146,19 +144,19 @@ namespace MarektDemo.Services.Concrete
                 {
                     Console.WriteLine("Not Found!");
                 }
-                
-                    var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
+
+                var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
                 foreach (var product in existproduct)
                 {
-                    table.AddRow(product.Id, product.Name, product.Price,product.Catagory, product.Number);
+                    table.AddRow(product.Id, product.Name, product.Price, product.Catagory, product.Number);
                 }
                 table.Write();
-                
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }    
+            }
         }
         public static void MenuSearchProductbyName()
         {
@@ -171,7 +169,7 @@ namespace MarektDemo.Services.Concrete
                 if (string.IsNullOrEmpty(name)) throw new Exception("Name cannot be null!");
 
                 var table = new ConsoleTable("Id", "Name", "Price", "Category", "Number");
-                
+
                 var productna = products.Where(x => x.Name == name).ToArray();
 
                 foreach (var productn in productna)
@@ -184,7 +182,7 @@ namespace MarektDemo.Services.Concrete
             catch (Exception ex)
             {
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }                         
+            }
         }
 
         public static void MenuAddNewSale()
@@ -195,7 +193,7 @@ namespace MarektDemo.Services.Concrete
                 int id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter sale's quantity");
                 int quantity = int.Parse(Console.ReadLine());
-                
+
                 marketservice.AddSale(id, quantity, DateTime.Now);
 
             }
@@ -205,7 +203,41 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
         }
-    
-    
+        public static void MenuShowAllSales()
+        {
+            try
+            {
+                var sale = marketservice.GetSale();
+
+                if (sale.Count == 0) throw new Exception("There are no sales!");
+
+                var table = new ConsoleTable("ID", "Amount", "Time");
+                foreach (var sales in sale)
+                {
+                    table.AddRow(sales.Id, sales.Amount, sales.Time);
+                }
+                table.Write();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }
+        public static void MenuDeleteSale()
+        {
+            try 
+            {
+                Console.WriteLine("Enter sales's ID:");
+                int id = int.Parse(Console.ReadLine());
+
+                marketservice.DeleteSale(id);
+                Console.WriteLine("Sale deleted successfuly!");
+            }
+            catch ( Exception ex ) 
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            } 
+        }
     }
-}
+}        

@@ -25,8 +25,7 @@ namespace MarektDemo.Services.Concrete
         }
 
         public int AddProduct(string name, int price, Category catagory, int number) 
-        {
-            
+        {        
             if (string.IsNullOrEmpty(name))   throw new ArgumentNullException("Name is null!"); 
             if (price <= 0)  throw new Exception("Price is negative"); 
             if (number < 0) { throw new Exception("Number is negative"); }
@@ -51,7 +50,7 @@ namespace MarektDemo.Services.Concrete
         }
         public void DeleteProduct (int id)
         {
-            if (id < 0) throw new Exception("There is no Product!");
+            if (id < 0) throw new Exception("ID cannot be negative!");
             int getproduct = products.FindIndex(x => x.Id == id);
             if (getproduct == -1) throw new Exception("Products not found!");
             products.RemoveAt(getproduct);
@@ -65,33 +64,36 @@ namespace MarektDemo.Services.Concrete
 
         }
 
-
-
-
-        public int AddSale(int id ,int quantity,DateTime time)
+        public void AddSale(int id ,int quantity,DateTime time)
         {
             List<SaleItem> tempSale = new List<SaleItem>();
 
-            var product = products.FirstOrDefault(x => x.Id == id); 
-            if (product == null) throw new Exception("Product is not found");
-            var sum = product.Price * quantity;
-            var saleItem = new SaleItem(product,quantity);
-            tempSale.Add(saleItem);
-            var sale = new Sale(sum,time);
-
-            foreach (var item in tempSale)
+            var product = products.FirstOrDefault(x => x.Id == id);
+            if (quantity < 0) throw new Exception("Quantity must be grater than 0!");
+            else if (product.Number < quantity) throw new Exception("Not enough product in stock!");
+            else if (product == null) throw new Exception("Product is not found");
+            else
             {
-                sale.AddSaleItem(item);
+                var sum = product.Price * quantity;
+                var saleItem = new SaleItem(product, quantity);
+                tempSale.Add(saleItem);
+                var sale = new Sale(sum, time);
+
+                foreach (var item in tempSale)
+                {
+                    sale.AddSaleItem(item);
+                }
+                sales.Add(sale);
+                Console.WriteLine("Sale added successfuly!");
             }
-            sales.Add(sale);
-
-            return id;
         }
-
-
-
-
-
+        public void DeleteSale(int id)
+        {
+            if (id < 0) throw new Exception("ID cannot be negative!");
+            int getsaleid = sales.FindIndex(x => x.Id == id);
+            if (getsaleid == -1) throw new Exception("Sale not found!");
+            sales.RemoveAt(getsaleid);
+        }
 
         public List<Product> GetProducts()
         {

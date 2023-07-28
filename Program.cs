@@ -42,8 +42,6 @@ namespace MarketDemo
                         Console.WriteLine("There is no such option");
                         break;
                 }
-
-
             } while (option!=0);
 
         }

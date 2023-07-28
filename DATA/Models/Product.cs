@@ -26,6 +26,5 @@ namespace MarektDemo.Models
             Id = count;
             count++;
         }
-
     }
 }

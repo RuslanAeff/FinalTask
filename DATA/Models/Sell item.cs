@@ -13,15 +13,11 @@ namespace MarektDemo.Models
         public Product Product { get; set; }
         public int Number { get; set; }
 
-        public SaleItem (Product product, int number)
+        public SaleItem (Product product, int quantity)
         {
-            if (product.Number < number || number < 0) 
-                throw new ArgumentException($"Cannot make a sale item of {number} {product.Name} which " +
-                    $"{product.Number} of it exist in the storage!");
             Product = product;
-            Number = number;
+            Number = quantity;
             counter++;
         }
-
     }
 }

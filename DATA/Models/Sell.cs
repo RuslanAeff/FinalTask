@@ -19,9 +19,8 @@ namespace MarektDemo.Models
             Time = time;
             Id = counter;
             counter++;
-
         }
-        public void AddSaleItem(SaleItem saleItem) 
+        public void AddSaleItem(SaleItem saleItem)
         {
             SaleItems.Add(saleItem);
         }
