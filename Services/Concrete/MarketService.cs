@@ -29,7 +29,7 @@ namespace MarektDemo.Services.Concrete
             if (string.IsNullOrEmpty(name))   throw new ArgumentNullException("Name is null!"); 
             if (price <= 0)  throw new Exception("Price is negative"); 
             if (number < 0) { throw new Exception("Number is negative"); }
-            if (catagory ==null) throw new Exception("There is no Category!");
+            if (catagory == null) throw new Exception("There is no Category!");
             var product = new Product (name, price, catagory, number);
                 products.Add(product);
                 return product.Id;
@@ -85,6 +85,53 @@ namespace MarektDemo.Services.Concrete
                 }
                 sales.Add(sale);
                 Console.WriteLine("Sale added successfuly!");
+
+                int option;
+                do
+                {
+                    Console.WriteLine(" Do u want to add another sale item?");
+                    Console.WriteLine("1. Yes");
+                    Console.WriteLine("2. No");
+
+                    while(!int.TryParse(Console.ReadLine(), out option))
+                    {
+                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Enter option again:");
+                    }
+                    switch(option)
+                    {
+                        case 1:
+                            Console.WriteLine("Add product ID for sale: ");
+                            int saleId = int.Parse(Console.ReadLine());
+
+                            Console.WriteLine("Enter number:");
+                            int secondnumber = int.Parse(Console.ReadLine());
+
+                            var newProduct = products.Find(x => x.Id == saleId);
+                            var secondSum = product.Price * secondnumber;
+                            newProduct.Number -= secondnumber;
+
+                            var newSaleItem = new SaleItem(newProduct, secondnumber);
+                            sale_İtems.Add(newSaleItem);
+                            sale = new Sale(secondSum, DateTime.Today);
+                            foreach (var item in sale_İtems)
+                            {
+                                sale.AddSaleItem(item);
+                            }
+                            
+                            break;
+                        case 2:
+                            Console.WriteLine("Sale added successfuly!");
+                            Console.WriteLine("                       ");
+                            return;
+                        default:
+                            Console.WriteLine("No such option!");
+                            break;
+                            
+                    }
+
+                } while (option != 2);
+                
             }
         }
         public void DeleteSale(int id)
@@ -94,7 +141,20 @@ namespace MarektDemo.Services.Concrete
             if (getsaleid == -1) throw new Exception("Sale not found!");
             sales.RemoveAt(getsaleid);
         }
-
+        public List<Sale> ShowSalesForDateRange(DateTime mintime, DateTime maxtime)
+        {  
+            if (mintime > maxtime) throw new Exception("Minimum time cannot be greater than maximum time!");
+            List<Sale> result = sales.Where(x=>x.Time >= mintime && x.Time <= maxtime).ToList();
+            if (result == null) throw new Exception("Sale is not found!");
+            return result;
+        }
+        public List<Sale> ShowSalesForGivenAmount(double minamount,  double maxamount)
+        {
+            if (minamount > maxamount) throw new Exception("Minamonut cannot be greater than maxamount!");
+            List<Sale> result = sales.Where(x=> x.Amount >= minamount && x.Amount <= maxamount).ToList();
+            if (result == null) throw new Exception("Sale is not found!");
+            return result;
+        }
         public List<Product> GetProducts()
         {
             return products; 

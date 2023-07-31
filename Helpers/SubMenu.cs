@@ -110,6 +110,12 @@ namespace MarektDemo.Helpers
                     case 4:
                        MenuService.MenuShowAllSales();
                         break;
+                    case 5:
+                       MenuService.MenuShowSalesForDateRange();
+                        break;
+                    case 6:
+                    MenuService.MenuShowSalesForGivenAmount();
+                        break;
                     case 0:
                         Console.Clear();
                         break;

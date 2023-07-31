@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -184,7 +185,6 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
         }
-
         public static void MenuAddNewSale()
         {
             try
@@ -239,5 +239,61 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             } 
         }
+        public static void MenuShowSalesForDateRange()
+        {
+            try
+            {
+                Console.WriteLine("Enter mindate dd/MM/yyyy format: ");
+                DateTime mindate = DateTime.Parse(Console.ReadLine());
+                Console.WriteLine("Enter maxdate dd//MM/yyyy format:");
+                DateTime maxdate = DateTime.Parse(Console.ReadLine());
+                var existsales = marketservice.ShowSalesForDateRange(mindate, maxdate);
+                if (existsales.Count == 0) throw new Exception("Sale not found!");
+
+               foreach( var item in existsales) 
+                {    
+                    var table = new ConsoleTable("ID","Name","Number","Amount","Date");
+
+                    foreach (var item2 in item.SaleItems)
+                    {
+                        table.AddRow(item.Id,item2.Product.Name,item.SaleItems.Count ,item.Amount,item.Time);                     
+                    }
+                    table.Write();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }
+        public static void MenuShowSalesForGivenAmount()
+        {
+            try
+            {
+                Console.WriteLine("Enter minprice:");
+                double minamount = double.Parse(Console.ReadLine());
+                Console.WriteLine("Enter maxprice:");
+                double maxamount = double.Parse(Console.ReadLine());
+                var existsale = marketservice.ShowSalesForGivenAmount(minamount, maxamount);
+                if (existsale.Count == 0) throw new Exception("Sale is not found!");
+
+                foreach (var item in existsale)
+                {
+                    var table = new ConsoleTable("ID", "Name", "Number", "Amount", "Date");
+                    foreach (var item2 in item.SaleItems)
+                    {
+                        table.AddRow(item.Id, item2.Product.Name, item.SaleItems.Count, item.Amount, item.Time);
+                    }
+                    table.Write();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+           
+        }
+    
     }
 }        
