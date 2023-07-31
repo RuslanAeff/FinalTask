@@ -54,10 +54,13 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine("Enter price:");
                 int price = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter category");
+                Console.WriteLine("               ");
+                Console.WriteLine("0. Food  1. Electronics  2.Drinks");
                 Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine(), true);
                 Console.WriteLine("Enter number:");
                 int number = int.Parse(Console.ReadLine());
                 marketservice.EditProduct(id, name, price, category, number);
+                Console.WriteLine("Successfult edited!");
             }
             catch (Exception ex)
             {
@@ -203,6 +206,29 @@ namespace MarektDemo.Services.Concrete
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
             }
         }
+        public static void MenuReturnProduct()
+        {
+            try
+            {
+                Console.WriteLine("Enter ID for checking:");
+                int saleId = int.Parse(Console.ReadLine());
+                
+                Console.WriteLine("Enter product ID for checking:");
+                int productId = int.Parse(Console.ReadLine());                
+
+                Console.WriteLine("Enter number for cehcking:");
+                int productNumber = int.Parse(Console.ReadLine());
+
+                marketservice.ReturnOfProduct(saleId, productId, productNumber);
+
+                Console.WriteLine("Product returned successfully");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }           
         public static void MenuShowAllSales()
         {
             try
@@ -271,9 +297,9 @@ namespace MarektDemo.Services.Concrete
             try
             {
                 Console.WriteLine("Enter minprice:");
-                double minamount = double.Parse(Console.ReadLine());
+                decimal minamount = decimal.Parse(Console.ReadLine());
                 Console.WriteLine("Enter maxprice:");
-                double maxamount = double.Parse(Console.ReadLine());
+                decimal maxamount = decimal.Parse(Console.ReadLine());
                 var existsale = marketservice.ShowSalesForGivenAmount(minamount, maxamount);
                 if (existsale.Count == 0) throw new Exception("Sale is not found!");
 
@@ -291,9 +317,59 @@ namespace MarektDemo.Services.Concrete
             {
 
                 Console.WriteLine($"Oops, got an error: {ex.Message}");
-            }
-           
+            } 
         }
-    
+        public static void MenuShowSalesForGivenDate()
+        {
+            try
+            {
+                Console.WriteLine("Enter date dd/MM/yyyy format:");
+                DateTime dateTime = DateTime.Parse(Console.ReadLine());
+
+                var existsale = marketservice.ShowSaleForGivenDate(dateTime);
+                if (existsale.Count == 0) throw new Exception("Sale is not found!");
+
+                foreach (var item in existsale)
+                {
+                    var table = new ConsoleTable("ID", "Name", "Number", "Amount", "Date");
+                    foreach (var item2 in item.SaleItems)
+                    {
+                        table.AddRow(item.Id, item2.Product.Name, item.SaleItems.Count, item.Amount, item.Time);
+                    }
+                    table.Write();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }
+        public static void MenuShowSalesByID()
+        {
+            try
+            {
+                var sales = marketservice.GetSale();
+                Console.WriteLine("Enter sale's ID:");
+                int id =int.Parse(Console.ReadLine());
+
+                var existsale = marketservice.ShowSalesByID(id);
+                if (sales.Count == 0) throw new Exception("Not Found!");
+               
+                var table = new ConsoleTable("ID", "Name", "Number", "Amount", "Date");
+               
+                foreach (var item in existsale)
+                {
+                    foreach (var item2 in item.SaleItems)
+                    {
+                        table.AddRow(item.Id, item2.Product.Name, item.SaleItems.Count, item.Amount, item.Time);
+                    }
+                    table.Write();
+                }
+            }
+            catch ( Exception ex)
+            {
+                Console.WriteLine($"Oops, got an error: {ex.Message}");
+            }
+        }
     }
 }        

@@ -23,7 +23,6 @@ namespace MarektDemo.Services.Concrete
             sale_İtems = new List<SaleItem>();
             categories = new List<Category>();
         }
-
         public int AddProduct(string name, int price, Category catagory, int number) 
         {        
             if (string.IsNullOrEmpty(name))   throw new ArgumentNullException("Name is null!"); 
@@ -33,11 +32,10 @@ namespace MarektDemo.Services.Concrete
             var product = new Product (name, price, catagory, number);
                 products.Add(product);
                 return product.Id;
-        }
-        
+        } 
         public void EditProduct (int id,string name, int price, Category catagory, int number)
         {
-            if (!string.IsNullOrEmpty(name))  throw new Exception("Name is null!"); 
+            if (string.IsNullOrEmpty(name))  throw new Exception("Name is null!"); 
             if (price <= 0)  throw new Exception("Price is negative"); 
             if (number < 0)  throw new Exception("Number is negative"); 
             if (id < 0) throw new Exception("ID is negative!");
@@ -61,9 +59,7 @@ namespace MarektDemo.Services.Concrete
             if (maxamount <= 0) throw new Exception("minamount cannot be less than 0 or equals 0");
             if (minamount > maxamount) throw new Exception("minamount cannot be greater than maxamount!");
             return products.Where(x => x.Price >=minamount && x.Price <=maxamount).ToList();
-
         }
-
         public void AddSale(int id ,int quantity,DateTime time)
         {
             List<SaleItem> tempSale = new List<SaleItem>();
@@ -85,55 +81,26 @@ namespace MarektDemo.Services.Concrete
                 }
                 sales.Add(sale);
                 Console.WriteLine("Sale added successfuly!");
-
-                int option;
-                do
-                {
-                    Console.WriteLine(" Do u want to add another sale item?");
-                    Console.WriteLine("1. Yes");
-                    Console.WriteLine("2. No");
-
-                    while(!int.TryParse(Console.ReadLine(), out option))
-                    {
-                        Console.WriteLine("Invalid option!");
-                        Console.WriteLine("Enter option again:");
-                    }
-                    switch(option)
-                    {
-                        case 1:
-                            Console.WriteLine("Add product ID for sale: ");
-                            int saleId = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine("Enter number:");
-                            int secondnumber = int.Parse(Console.ReadLine());
-
-                            var newProduct = products.Find(x => x.Id == saleId);
-                            var secondSum = product.Price * secondnumber;
-                            newProduct.Number -= secondnumber;
-
-                            var newSaleItem = new SaleItem(newProduct, secondnumber);
-                            sale_İtems.Add(newSaleItem);
-                            sale = new Sale(secondSum, DateTime.Today);
-                            foreach (var item in sale_İtems)
-                            {
-                                sale.AddSaleItem(item);
-                            }
-                            
-                            break;
-                        case 2:
-                            Console.WriteLine("Sale added successfuly!");
-                            Console.WriteLine("                       ");
-                            return;
-                        default:
-                            Console.WriteLine("No such option!");
-                            break;
-                            
-                    }
-
-                } while (option != 2);
-                
             }
-        }
+        }        
+         public void ReturnOfProduct(int SaleId, int ProductId, int productNumber)
+         {
+            
+            Sale sale = sales.Find(s => s.Id == SaleId);
+            if (sale == null) throw new Exception("Sale is not found");
+
+            
+            SaleItem salesItem = sale.SaleItems.Find(x=>x.Id == ProductId);           
+            if (salesItem == null) throw new Exception("Product in Sale is not found");
+            if (productNumber > salesItem.Number) throw new Exception("Quantity must not more than product's number");
+
+            decimal refundamount = (decimal)(productNumber * salesItem.Product.Price);
+            
+            salesItem.Product.Number += productNumber;
+            salesItem.Number -= productNumber;
+            sale.Amount -= refundamount;
+
+         }
         public void DeleteSale(int id)
         {
             if (id < 0) throw new Exception("ID cannot be negative!");
@@ -148,12 +115,24 @@ namespace MarektDemo.Services.Concrete
             if (result == null) throw new Exception("Sale is not found!");
             return result;
         }
-        public List<Sale> ShowSalesForGivenAmount(double minamount,  double maxamount)
+        public List<Sale> ShowSalesForGivenAmount(decimal minamount,  decimal maxamount)
         {
             if (minamount > maxamount) throw new Exception("Minamonut cannot be greater than maxamount!");
             List<Sale> result = sales.Where(x=> x.Amount >= minamount && x.Amount <= maxamount).ToList();
             if (result == null) throw new Exception("Sale is not found!");
             return result;
+        }
+        public List<Sale> ShowSaleForGivenDate (DateTime dateTime)
+        {
+            if (dateTime == null) throw new Exception("Sale is not found!");
+            List<Sale> result = sales.Where(x=> x.Time >= dateTime).ToList();
+            return result;
+        }
+        public List<Sale> ShowSalesByID(int id)
+        {
+            if (id < 0) throw new Exception("ID cannot be negatice!");
+            List<Sale> result = sales.FindAll(x => x.Id >= id).ToList();
+            return result;  
         }
         public List<Product> GetProducts()
         {
@@ -167,6 +146,5 @@ namespace MarektDemo.Services.Concrete
         {
             return sale_İtems;
         }
-    
     }
 }

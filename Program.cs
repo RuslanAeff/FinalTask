@@ -24,11 +24,11 @@ namespace MarketDemo
 
 
                while(!int.TryParse(Console.ReadLine(), out option))
-                {
+               {
                     Console.WriteLine("Invalid option!");
                     Console.WriteLine("Enter an option please:");
                     Console.WriteLine("----------------");
-                }
+               }
 
                 switch (option)
                 {
@@ -43,7 +43,6 @@ namespace MarketDemo
                         break;
                 }
             } while (option!=0);
-
         }
     }
 }

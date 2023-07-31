@@ -10,7 +10,7 @@ namespace MarektDemo.Models
     public class Sale : BaseEntity
     {
         private static int counter = 0;
-        public int Amount;
+        public decimal Amount;
         public DateTime Time;
         public List<SaleItem> SaleItems = new List<SaleItem>();
 
@@ -25,6 +25,5 @@ namespace MarektDemo.Models
         {
             SaleItems.Add(saleItem);
         }
-       
     }
 }

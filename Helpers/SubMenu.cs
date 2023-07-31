@@ -30,14 +30,12 @@ namespace MarektDemo.Helpers
                 Console.WriteLine("Please enter option:");
                 Console.WriteLine("------------------------");
 
-
                 while (!int.TryParse(Console.ReadLine(), out option))
                 {
                     Console.WriteLine("Invalid option!");
                     Console.WriteLine("Enter an option please:");
                     Console.WriteLine("----------------");
                 }
-
                 switch (option)
                 {
                     case 1:
@@ -61,6 +59,9 @@ namespace MarektDemo.Helpers
                     case 7:
                        MenuService.MenuSearchProductbyName();
                        break;
+                    case 8:
+                       MenuService.MenuShowSalesByID();
+                        break;
                     case 0:
                        Console.Clear();
                        break;
@@ -70,7 +71,6 @@ namespace MarektDemo.Helpers
                 }
 
             } while (option != 0);
-
         }
         public static void SubMenuHelpSell()
         {
@@ -85,7 +85,7 @@ namespace MarektDemo.Helpers
                 Console.WriteLine("3. Delete sale");
                 Console.WriteLine("4. Show all sales");
                 Console.WriteLine("5. Showing sales by date range");
-                Console.WriteLine("6. Showing sales by price range");
+                Console.WriteLine("6. Showing sales by amount range");
                 Console.WriteLine("7. Showing sales on a given date");
                 Console.WriteLine("8. Showing information of the sale with the given ID");
                 Console.WriteLine("0. Go back");
@@ -104,6 +104,9 @@ namespace MarektDemo.Helpers
                     case 1:
                        MenuService.MenuAddNewSale();
                         break;
+                    case 2:
+                        MenuService.MenuReturnProduct();
+                        break;
                     case 3:
                        MenuService.MenuDeleteSale();
                         break;
@@ -115,6 +118,12 @@ namespace MarektDemo.Helpers
                         break;
                     case 6:
                     MenuService.MenuShowSalesForGivenAmount();
+                        break;
+                    case 7:
+                        MenuService.MenuShowSalesForGivenDate();
+                        break; 
+                    case 8:
+                        MenuService.MenuShowSalesByID();
                         break;
                     case 0:
                         Console.Clear();

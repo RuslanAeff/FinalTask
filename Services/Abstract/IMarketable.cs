@@ -15,6 +15,5 @@ namespace MarektDemo.Services.Abstract
         List<SaleItem> GetSaleItems();
         int AddProduct(string name, int price, Category catagory, int number);
         void AddSale(int id, int quantity, DateTime time);
-
     }
 }
